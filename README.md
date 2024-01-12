@@ -4,7 +4,7 @@ A DLL Plugin for SimCity 4 that provides more game variables with RCI demand inf
 
 With this plugin installed there will be the following new variables that can be used from LUA scripts and UI files:
 
-| Demand variable name  | Description |
+| Variable name  | Description |
 |-----------------------|-------------|
 | `g_cs1_active_demand` | Cs§ active demand |
 | `g_cs2_active_demand` | Cs§§ active demand |
