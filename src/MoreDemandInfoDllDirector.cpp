@@ -38,6 +38,8 @@
 #include "wil/filesystem.h"
 
 static constexpr uint32_t kSC4MessageActiveDemandChanged = 0x426840A0;
+static constexpr uint32_t kSC4MessagePreCityInit = 0x26D31EC0;
+static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
 
 static constexpr uint32_t kCs1DemandID = 0x3110;
 static constexpr uint32_t kCs2DemandID = 0x3120;
@@ -57,7 +59,8 @@ class MoreDemandInfoDllDirector : public cRZMessage2COMDirector
 public:
 
 	MoreDemandInfoDllDirector()
-		: pSC4App(nullptr),
+		: pAdvisorSystem(nullptr),
+		  pDemandSim(nullptr),
 		  firstCs1DemandUpdate(true),
 		  firstCs2DemandUpdate(true),
 		  firstCs3DemandUpdate(true),
@@ -81,41 +84,30 @@ public:
 
 	void UpdateCs1ActiveDemand()
 	{
-		if (pSC4App)
+		if (pAdvisorSystem && pDemandSim)
 		{
-			cISC4City* pCity = pSC4App->GetCity();
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs1DemandID, kTotalsDemandIndex);
 
-			if (pCity)
+			if (pDemand)
 			{
-				cISC4AdvisorSystem* pAdvisorSystem = pCity->GetAdvisorSystem();
-				cISC4DemandSimulator* pDemandSim = pCity->GetDemandSimulator();
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
 
-				if (pAdvisorSystem && pDemandSim)
+				const float activeDemand = pDemand->QueryActiveDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs1_active_demand", activeDemand);
+
+				if (firstCs1DemandUpdate)
 				{
-					const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs1DemandID, kTotalsDemandIndex);
+					firstCs1DemandUpdate = false;
 
-					if (pDemand)
-					{
-						// The SetGlobalValue method will add the value to the LUA scripting system.
-						// It can be accessed from a script or UI placeholder text using game.<value name>.
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
 
-						const float activeDemand = pDemand->QueryActiveDemandValue();
-						pAdvisorSystem->SetGlobalValue("g_cs1_active_demand", activeDemand);
+					Logger& logger = Logger::GetInstance();
 
-						if (firstCs1DemandUpdate)
-						{
-							firstCs1DemandUpdate = false;
-
-							// SC4 frequently updates the active demand values, so we only log the first
-							// one to show that the plugin is working.
-
-							Logger& logger = Logger::GetInstance();
-
-							logger.WriteLine(
-								LogLevel::Info,
-								"Set the game.g_cs1_active_demand variable.");
-						}
-					}
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the game.g_cs1_active_demand variable.");
 				}
 			}
 		}
@@ -123,41 +115,30 @@ public:
 
 	void UpdateCs2ActiveDemand()
 	{
-		if (pSC4App)
+		if (pAdvisorSystem && pDemandSim)
 		{
-			cISC4City* pCity = pSC4App->GetCity();
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs1DemandID, kTotalsDemandIndex);
 
-			if (pCity)
+			if (pDemand)
 			{
-				cISC4AdvisorSystem* pAdvisorSystem = pCity->GetAdvisorSystem();
-				cISC4DemandSimulator* pDemandSim = pCity->GetDemandSimulator();
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
 
-				if (pAdvisorSystem && pDemandSim)
+				const float activeDemand = pDemand->QueryActiveDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs2_active_demand", activeDemand);
+
+				if (firstCs2DemandUpdate)
 				{
-					const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs1DemandID, kTotalsDemandIndex);
+					firstCs2DemandUpdate = false;
 
-					if (pDemand)
-					{
-						// The SetGlobalValue method will add the value to the LUA scripting system.
-						// It can be accessed from a script or UI placeholder text using game.<value name>.
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
 
-						const float activeDemand = pDemand->QueryActiveDemandValue();
-						pAdvisorSystem->SetGlobalValue("g_cs2_active_demand", activeDemand);
+					Logger& logger = Logger::GetInstance();
 
-						if (firstCs2DemandUpdate)
-						{
-							firstCs2DemandUpdate = false;
-
-							// SC4 frequently updates the active demand values, so we only log the first
-							// one to show that the plugin is working.
-
-							Logger& logger = Logger::GetInstance();
-
-							logger.WriteLine(
-								LogLevel::Info,
-								"Set the game.g_cs2_active_demand variable.");
-						}
-					}
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the game.g_cs2_active_demand variable.");
 				}
 			}
 		}
@@ -165,41 +146,30 @@ public:
 
 	void UpdateCs3ActiveDemand()
 	{
-		if (pSC4App)
+		if (pAdvisorSystem && pDemandSim)
 		{
-			cISC4City* pCity = pSC4App->GetCity();
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs3DemandID, kTotalsDemandIndex);
 
-			if (pCity)
+			if (pDemand)
 			{
-				cISC4AdvisorSystem* pAdvisorSystem = pCity->GetAdvisorSystem();
-				cISC4DemandSimulator* pDemandSim = pCity->GetDemandSimulator();
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
 
-				if (pAdvisorSystem && pDemandSim)
+				const float activeDemand = pDemand->QueryActiveDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs3_active_demand", activeDemand);
+
+				if (firstCs3DemandUpdate)
 				{
-					const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs3DemandID, kTotalsDemandIndex);
+					firstCs3DemandUpdate = false;
 
-					if (pDemand)
-					{
-						// The SetGlobalValue method will add the value to the LUA scripting system.
-						// It can be accessed from a script or UI placeholder text using game.<value name>.
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
 
-						const float activeDemand = pDemand->QueryActiveDemandValue();
-						pAdvisorSystem->SetGlobalValue("g_cs3_active_demand", activeDemand);
+					Logger& logger = Logger::GetInstance();
 
-						if (firstCs3DemandUpdate)
-						{
-							firstCs3DemandUpdate = false;
-
-							// SC4 frequently updates the active demand values, so we only log the first
-							// one to show that the plugin is working.
-
-							Logger& logger = Logger::GetInstance();
-
-							logger.WriteLine(
-								LogLevel::Info,
-								"Set the game.g_cs3_active_demand variable.");
-						}
-					}
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the game.g_cs3_active_demand variable.");
 				}
 			}
 		}
@@ -207,48 +177,37 @@ public:
 
 	void UpdateIRActiveDemandAndCap()
 	{
-		if (pSC4App)
+		if (pAdvisorSystem && pDemandSim)
 		{
-			cISC4City* pCity = pSC4App->GetCity();
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kIRDemandID, kTotalsDemandIndex);
 
-			if (pCity)
+			if (pDemand)
 			{
-				cISC4AdvisorSystem* pAdvisorSystem = pCity->GetAdvisorSystem();
-				cISC4DemandSimulator* pDemandSim = pCity->GetDemandSimulator();
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
 
-				if (pAdvisorSystem && pDemandSim)
+				const float irActiveDemand = pDemand->QueryActiveDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_ir_active_demand", irActiveDemand);
+
+				const SC4Percentage* irCap = pDemand->GetDemandCap();
+
+				// Convert the IR cap value from the range of [0, 1] to [0, 100].
+				const float normalizedIRCapValue = irCap->percentage * 100.0f;
+
+				pAdvisorSystem->SetGlobalValue("g_current_ir_cap", normalizedIRCapValue);
+
+				if (firstIRDemandUpdate)
 				{
-					const cISC4Demand* pDemand = pDemandSim->GetDemand(kIRDemandID, kTotalsDemandIndex);
+					firstIRDemandUpdate = false;
 
-					if (pDemand)
-					{
-						// The SetGlobalValue method will add the value to the LUA scripting system.
-						// It can be accessed from a script or UI placeholder text using game.<value name>.
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
 
-						const float irActiveDemand = pDemand->QueryActiveDemandValue();
-						pAdvisorSystem->SetGlobalValue("g_ir_active_demand", irActiveDemand);
+					Logger& logger = Logger::GetInstance();
 
-						const SC4Percentage* irCap = pDemand->GetDemandCap();
-
-						// Convert the IR cap value from the range of [0, 1] to [0, 100].
-						const float normalizedIRCapValue = irCap->percentage * 100.0f;
-
-						pAdvisorSystem->SetGlobalValue("g_current_ir_cap", normalizedIRCapValue);
-
-						if (firstIRDemandUpdate)
-						{
-							firstIRDemandUpdate = false;
-
-							// SC4 frequently updates the active demand values, so we only log the first
-							// one to show that the plugin is working.
-
-							Logger& logger = Logger::GetInstance();
-
-							logger.WriteLine(
-								LogLevel::Info,
-								"Set the game.g_ir_active_demand and game.g_current_ir_cap variables.");
-						}
-					}
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the game.g_ir_active_demand and game.g_current_ir_cap variables.");
 				}
 			}
 		}
@@ -275,6 +234,23 @@ public:
 		}
 	}
 
+	void PreCityInit(cIGZMessage2Standard* pStandardMsg)
+	{
+		cISC4City* pCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
+
+		if (pCity)
+		{
+			pAdvisorSystem = pCity->GetAdvisorSystem();
+			pDemandSim = pCity->GetDemandSimulator();
+		}
+	}
+
+	void PreCityShutdown()
+	{
+		pAdvisorSystem = nullptr;
+		pDemandSim = nullptr;
+	}
+
 	bool DoMessage(cIGZMessage2* pMessage)
 	{
 		cIGZMessage2Standard* pStandardMsg = static_cast<cIGZMessage2Standard*>(pMessage);
@@ -285,6 +261,12 @@ public:
 		case kSC4MessageActiveDemandChanged:
 			ActiveDemandChanged(pStandardMsg);
 			break;
+		case kSC4MessagePreCityInit:
+			PreCityInit(pStandardMsg);
+			break;
+		case kSC4MessagePreCityShutdown:
+			PreCityShutdown();
+			break;
 		}
 
 		return true;
@@ -294,26 +276,13 @@ public:
 	{
 		Logger& logger = Logger::GetInstance();
 
-		cIGZFrameWork* const pFramework = RZGetFrameWork();
-
-		cIGZApp* const pApp = pFramework->Application();
-		if (!pFramework)
-		{
-			logger.WriteLine(LogLevel::Error, "Failed to get the GZCOM Application pointer.");
-			return false;
-		}
-
-		if (!pApp->QueryInterface(kGZIID_cISC4App, reinterpret_cast<void**>(&pSC4App)))
-		{
-			logger.WriteLine(LogLevel::Error, "Failed to get the SC4 Application pointer.");
-			return false;
-		}
-
 		cIGZMessageServer2Ptr pMsgServ;
 		if (pMsgServ)
 		{
 			std::vector<uint32_t> requiredNotifications;
 			requiredNotifications.push_back(kSC4MessageActiveDemandChanged);
+			requiredNotifications.push_back(kSC4MessagePreCityInit);
+			requiredNotifications.push_back(kSC4MessagePreCityShutdown);
 
 			for (uint32_t messageID : requiredNotifications)
 			{
@@ -360,7 +329,8 @@ private:
 		return temp.parent_path();
 	}
 
-	cISC4App* pSC4App;
+	cISC4AdvisorSystem* pAdvisorSystem;
+	cISC4DemandSimulator* pDemandSim;
 	bool firstIRDemandUpdate;
 	bool firstCs1DemandUpdate;
 	bool firstCs2DemandUpdate;
