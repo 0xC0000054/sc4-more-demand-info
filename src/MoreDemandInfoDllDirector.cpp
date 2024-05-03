@@ -45,6 +45,9 @@ static constexpr uint32_t kCs1DemandID = 0x3110;
 static constexpr uint32_t kCs2DemandID = 0x3120;
 static constexpr uint32_t kCs3DemandID = 0x3130;
 static constexpr uint32_t kIRDemandID = 0x4100;
+static constexpr uint32_t kIDDemandID = 0x4200;
+static constexpr uint32_t kIMDemandID = 0x4300;
+static constexpr uint32_t kIHTDemandID = 0x4400;
 
 static constexpr uint32_t kTotalsDemandIndex = 0x20000;
 
@@ -64,7 +67,10 @@ public:
 		  firstCs1DemandUpdate(true),
 		  firstCs2DemandUpdate(true),
 		  firstCs3DemandUpdate(true),
-		  firstIRDemandUpdate(true)
+		  firstIRDemandUpdate(true),
+		  firstIDDemandUpdate(true),
+		  firstIMDemandUpdate(true),
+		  firstIHTDemandUpdate(true)
 	{
 		std::filesystem::path dllFolder = GetDllFolderPath();
 
@@ -82,7 +88,7 @@ public:
 		return kMoreDemandInfoPluginDirectorID;
 	}
 
-	void UpdateCs1ActiveDemand()
+	void UpdateCs1Demand()
 	{
 		if (pAdvisorSystem && pDemandSim)
 		{
@@ -96,6 +102,9 @@ public:
 				const float activeDemand = pDemand->QueryActiveDemandValue();
 				pAdvisorSystem->SetGlobalValue("g_cs1_active_demand", activeDemand);
 
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs1_demand", demand);
+
 				if (firstCs1DemandUpdate)
 				{
 					firstCs1DemandUpdate = false;
@@ -107,13 +116,13 @@ public:
 
 					logger.WriteLine(
 						LogLevel::Info,
-						"Set the game.g_cs1_active_demand variable.");
+						"Set the cs1 demand variables.");
 				}
 			}
 		}
 	}
 
-	void UpdateCs2ActiveDemand()
+	void UpdateCs2Demand()
 	{
 		if (pAdvisorSystem && pDemandSim)
 		{
@@ -127,6 +136,9 @@ public:
 				const float activeDemand = pDemand->QueryActiveDemandValue();
 				pAdvisorSystem->SetGlobalValue("g_cs2_active_demand", activeDemand);
 
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs2_demand", demand);
+
 				if (firstCs2DemandUpdate)
 				{
 					firstCs2DemandUpdate = false;
@@ -138,13 +150,13 @@ public:
 
 					logger.WriteLine(
 						LogLevel::Info,
-						"Set the game.g_cs2_active_demand variable.");
+						"Set the cs2 demand variables.");
 				}
 			}
 		}
 	}
 
-	void UpdateCs3ActiveDemand()
+	void UpdateCs3Demand()
 	{
 		if (pAdvisorSystem && pDemandSim)
 		{
@@ -158,6 +170,9 @@ public:
 				const float activeDemand = pDemand->QueryActiveDemandValue();
 				pAdvisorSystem->SetGlobalValue("g_cs3_active_demand", activeDemand);
 
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_cs3_demand", demand);
+
 				if (firstCs3DemandUpdate)
 				{
 					firstCs3DemandUpdate = false;
@@ -169,13 +184,13 @@ public:
 
 					logger.WriteLine(
 						LogLevel::Info,
-						"Set the game.g_cs3_active_demand variable.");
+						"Set the cs3 demand variables.");
 				}
 			}
 		}
 	}
 
-	void UpdateIRActiveDemandAndCap()
+	void UpdateIRDemand()
 	{
 		if (pAdvisorSystem && pDemandSim)
 		{
@@ -188,6 +203,9 @@ public:
 
 				const float irActiveDemand = pDemand->QueryActiveDemandValue();
 				pAdvisorSystem->SetGlobalValue("g_ir_active_demand", irActiveDemand);
+
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_ir_demand", demand);
 
 				const SC4Percentage* irCap = pDemand->GetDemandCap();
 
@@ -207,7 +225,97 @@ public:
 
 					logger.WriteLine(
 						LogLevel::Info,
-						"Set the game.g_ir_active_demand and game.g_current_ir_cap variables.");
+						"Set the IR (I-Ag) demand and cap variables.");
+				}
+			}
+		}
+	}
+
+	void UpdateIDDemand()
+	{
+		if (pAdvisorSystem && pDemandSim)
+		{
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kIDDemandID, kTotalsDemandIndex);
+
+			if (pDemand)
+			{
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_id_demand", demand);
+
+				if (firstIDDemandUpdate)
+				{
+					firstIDDemandUpdate = false;
+
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
+
+					Logger& logger = Logger::GetInstance();
+
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the ID demand variables.");
+				}
+			}
+		}
+	}
+
+	void UpdateIMDemand()
+	{
+		if (pAdvisorSystem && pDemandSim)
+		{
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kIMDemandID, kTotalsDemandIndex);
+
+			if (pDemand)
+			{
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_im_demand", demand);
+
+				if (firstIMDemandUpdate)
+				{
+					firstIMDemandUpdate = false;
+
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
+
+					Logger& logger = Logger::GetInstance();
+
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the IM demand variables.");
+				}
+			}
+		}
+	}
+
+	void UpdateIHTDemand()
+	{
+		if (pAdvisorSystem && pDemandSim)
+		{
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kIHTDemandID, kTotalsDemandIndex);
+
+			if (pDemand)
+			{
+				// The SetGlobalValue method will add the value to the LUA scripting system.
+				// It can be accessed from a script or UI placeholder text using game.<value name>.
+				const float demand = pDemand->QueryDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_iht_demand", demand);
+
+				if (firstIHTDemandUpdate)
+				{
+					firstIHTDemandUpdate = false;
+
+					// SC4 frequently updates the active demand values, so we only log the first
+					// one to show that the plugin is working.
+
+					Logger& logger = Logger::GetInstance();
+
+					logger.WriteLine(
+						LogLevel::Info,
+						"Set the IHT demand variables.");
 				}
 			}
 		}
@@ -220,16 +328,25 @@ public:
 		switch (demandID)
 		{
 		case kCs1DemandID:
-			UpdateCs1ActiveDemand();
+			UpdateCs1Demand();
 			break;
 		case kCs2DemandID:
-			UpdateCs2ActiveDemand();
+			UpdateCs2Demand();
 			break;
 		case kCs3DemandID:
-			UpdateCs3ActiveDemand();
+			UpdateCs3Demand();
 			break;
 		case kIRDemandID:
-			UpdateIRActiveDemandAndCap();
+			UpdateIRDemand();
+			break;
+		case kIDDemandID:
+			UpdateIDDemand();
+			break;
+		case kIMDemandID:
+			UpdateIMDemand();
+			break;
+		case kIHTDemandID:
+			UpdateIHTDemand();
 			break;
 		}
 	}
@@ -331,10 +448,13 @@ private:
 
 	cISC4AdvisorSystem* pAdvisorSystem;
 	cISC4DemandSimulator* pDemandSim;
-	bool firstIRDemandUpdate;
 	bool firstCs1DemandUpdate;
 	bool firstCs2DemandUpdate;
 	bool firstCs3DemandUpdate;
+	bool firstIRDemandUpdate;
+	bool firstIDDemandUpdate;
+	bool firstIMDemandUpdate;
+	bool firstIHTDemandUpdate;
 };
 
 cRZCOMDllDirector* RZGetCOMDllDirector() {

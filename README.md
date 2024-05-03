@@ -7,10 +7,17 @@ With this plugin installed there will be the following new variables that can be
 | Variable name  | Description |
 |-----------------------|-------------|
 | `g_cs1_active_demand` | Cs§ active demand |
+| `g_cs1_demand` | Cs§ demand |
 | `g_cs2_active_demand` | Cs§§ active demand |
+| `g_cs2_demand` | Cs§§ demand |
 | `g_cs3_active_demand` | Cs§§§ active demand |
+| `g_cs3_demand` | Cs§§§ demand |
 | `g_ir_active_demand`  | IR (I-Ag) active demand |
+| `g_ir_demand`  | IR (I-Ag) demand |
 | `g_current_ir_cap`    | Current IR (I-Ag) cap |
+| `g_id_demand` | ID demand |
+| `g_im_demand` | IM demand |
+| `g_iht_demand` | IHT demand |
 
 The values can be accessed using `game.<value name>` in LUA scripts and UI placeholder text.
 
