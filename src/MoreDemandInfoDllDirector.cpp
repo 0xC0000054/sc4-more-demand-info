@@ -201,8 +201,8 @@ public:
 				// The SetGlobalValue method will add the value to the LUA scripting system.
 				// It can be accessed from a script or UI placeholder text using game.<value name>.
 
-				const float irActiveDemand = pDemand->QueryActiveDemandValue();
-				pAdvisorSystem->SetGlobalValue("g_ir_active_demand", irActiveDemand);
+				const float activeDemand = pDemand->QueryActiveDemandValue();
+				pAdvisorSystem->SetGlobalValue("g_ir_active_demand", activeDemand);
 
 				const float demand = pDemand->QueryDemandValue();
 				pAdvisorSystem->SetGlobalValue("g_ir_demand", demand);
