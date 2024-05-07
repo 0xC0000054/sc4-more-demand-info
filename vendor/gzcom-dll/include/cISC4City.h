@@ -7,6 +7,7 @@ class cISC424HourClock;
 class cISC4AdvisorSystem;
 class cISC4BudgetSimulator;
 class cISC4BuildingDevelopmentSimulator;
+class cISC4CivicBuildingSimulator;
 class cISC4DemandSimulator;
 class cISC4DisasterLayer;
 class cISC4HistoryWarehouse;
@@ -16,6 +17,7 @@ class cISC4LotManager;
 class cISC4NetworkManager;
 class cISC4OccupantManager;
 class cISC4OrdinanceSimulator;
+class cISC4PlumbingSimulator;
 class cISC4PoliceSimulator;
 class cISC4PollutionSimulator;
 class cISC4ResidentialSimulator;
@@ -103,7 +105,7 @@ class cISC4City : public cIGZUnknown
 		virtual intptr_t GetLandValueSimulator(void) = 0;
 		virtual intptr_t GetNeighborsSimulator(void) = 0;
 		virtual cISC4OrdinanceSimulator* GetOrdinanceSimulator(void) = 0;
-		virtual intptr_t GetPlumbingSimulator(void) = 0;
+		virtual cISC4PlumbingSimulator* GetPlumbingSimulator(void) = 0;
 		virtual cISC4PoliceSimulator* GetPoliceSimulator(void) = 0;
 		virtual cISC4PollutionSimulator* GetPollutionSimulator(void) = 0;
 		virtual intptr_t GetPowerSimulator(void) = 0;
@@ -113,7 +115,7 @@ class cISC4City : public cIGZUnknown
 		virtual intptr_t GetMySimAgentSimulator(void) = 0;
 
 		virtual cISC4DisasterLayer* GetDisasterLayer(void) = 0;
-		virtual intptr_t GetCivicBuildingSimulator(void) = 0;
+		virtual cISC4CivicBuildingSimulator* GetCivicBuildingSimulator(void) = 0;
 		virtual intptr_t GetParkManager(void) = 0;
 		virtual cISC4LotManager* GetZoneDeveloper(void) = 0;
 		virtual intptr_t GetSeaportDeveloper(void) = 0;

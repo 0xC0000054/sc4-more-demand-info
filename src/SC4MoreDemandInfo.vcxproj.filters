@@ -16,6 +16,9 @@
     <Filter Include="Source Files\GZCOM">
       <UniqueIdentifier>{41f85324-01a3-4680-b8ed-3743b7f2ceb4}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\EASTL">
+      <UniqueIdentifier>{52754013-75e7-4cf3-a9e8-e68b2dd39044}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="MoreDemandInfoDllDirector.cpp">
@@ -34,6 +37,36 @@
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
     <ClCompile Include="..\vendor\gzcom-dll\src\cRZMessage2Standard.cpp">
+      <Filter>Source Files\GZCOM</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\assert.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\atomic.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\fixed_pool.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\hashtable.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\intrusive_list.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\numeric_limits.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\red_black_tree.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\string.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\EASTL\source\thread_support.cpp">
+      <Filter>Source Files\EASTL</Filter>
+    </ClCompile>
+    <ClCompile Include="..\vendor\gzcom-dll\src\EASTLAllocatorSC4.cpp">
       <Filter>Source Files\GZCOM</Filter>
     </ClCompile>
   </ItemGroup>

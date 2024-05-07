@@ -13,11 +13,11 @@ class cISC4Occupant : public cIGZUnknown
 		virtual bool Init(void) = 0;
 		virtual bool Shutdown(void) = 0;
 		virtual bool IsInitialized(void) = 0;
-		
+
 		virtual cISCPropertyHolder* AsPropertyHolder(void) = 0;
-		
+
 		virtual int32_t GetType(void) = 0;
-		
+
 		virtual bool GetPosition(cS3DVector3* pVector) = 0;
 		virtual bool SetPosition(cS3DVector3 const* pVector) = 0;
 
@@ -44,7 +44,7 @@ class cISC4Occupant : public cIGZUnknown
 		virtual bool GetOccupantGroups(std::set<uint32_t>& sGroups) = 0;
 		virtual bool GetOccupantManagerBBox(uint8_t* cBoxArray) = 0;
 		virtual bool SetOccupantManagerBBox(uint8_t* cBoxArray) = 0; // array has 5 elements
-		
+
 		virtual bool GetLotTag(uint32_t& dwLotTag) = 0;
 		virtual bool SetLotTag(uint32_t dwLotTag) = 0;
 

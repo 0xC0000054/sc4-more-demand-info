@@ -1,7 +1,9 @@
 #pragma once
-#include <vector>
 #include "cIGZString.h"
 #include "cIGZUnknown.h"
+
+#include "EASTLConfigSC4.h"
+#include "EASTL\vector.h"
 
 class cIGZCommandDispatcher;
 class cIGZCommandGenerator;
@@ -33,7 +35,7 @@ class cIGZCommandServer : public cIGZUnknown
 		virtual uint32_t GetCommandID(cIGZString const& szCommandName) = 0;
 		virtual uint32_t GetCommandIDFromCommandString(char const *pszCommandString, int32_t nStringLen) = 0;
 
-		virtual bool EnumerateCommands(std::vector<uint32_t>& vecCommandIDs) = 0;
+		virtual bool EnumerateCommands(eastl::vector<uint32_t>& vecCommandIDs) = 0;
 
 		virtual bool RegisterCommandGenerator(cIGZCommandGenerator *pCommandGen) = 0;
 		virtual bool UnregisterCommandGenerator(cIGZCommandGenerator *pCommandGen) = 0;

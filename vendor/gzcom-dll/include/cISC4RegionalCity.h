@@ -1,7 +1,9 @@
 #pragma once
 #include "cIGZUnknown.h"
+#include "SC4Percentage.h"
+#include "EASTLConfigSC4.h"
+#include "EASTL\vector.h"
 #include <list>
-#include <vector>
 
 class cIGZString;
 class cISC4City;
@@ -24,12 +26,12 @@ class cISC4RegionalCity : public cIGZUnknown
 		virtual int32_t GetPopulation(void) = 0;
 		virtual int32_t GetCommercialJobs(void) = 0;
 		virtual int32_t GetIndustrialJobs(void) = 0;
-		virtual float GetWorkforcePercentage(void) = 0;
-		
-		virtual int32_t GetMayorRating(void) = 0;
+		virtual SC4Percentage* GetWorkforcePercentage(void) = 0;
+
+		virtual int8_t GetMayorRating(void) = 0;
 		virtual int32_t GetDifficultyLevel(void) = 0;
 		virtual float GetTaxRate(uint32_t dwTaxType) = 0;
-		
+
 		virtual int32_t GetPopulation(uint32_t dwPopulationType) = 0;
 		virtual int32_t GetExtrapolatedPopulation(uint32_t dwPopulationType) = 0;
 		virtual int32_t GetAllowableExtrapolation(uint32_t dwPopulationType) = 0;
@@ -41,7 +43,7 @@ class cISC4RegionalCity : public cIGZUnknown
 
 		virtual bool SetupPreferences(SC4NewCityPreferences* pPreferences) = 0;
 		virtual bool UpdateCityCache(SC4NewCityPreferences* pPreferences) = 0;
-		
+
 		virtual bool SetupCity(cISC4City* pCity) = 0;
 		virtual bool UpdateCityCache(cISC4City* pCity) = 0;
 
@@ -65,7 +67,7 @@ class cISC4RegionalCity : public cIGZUnknown
 
 		virtual bool GetCityDescription(cIGZString& sDescription) = 0;
 		virtual bool SetCityDescription(cIGZString const& sDescription) = 0;
-		
+
 		virtual uint32_t GetBirthDate(void) = 0;
 		virtual bool SetBirthDate(uint32_t dwBirthDate) = 0;
 
@@ -110,8 +112,8 @@ class cISC4RegionalCity : public cIGZUnknown
 		virtual bool UpdateLocalDeals(void) = 0;
 		virtual bool SetLocalDeals(std::list<cISC4NeighborDeal*>& sList) = 0;
 		virtual bool GetLocalDeals(std::list<cISC4NeighborDeal*>& sList) = 0;
-		
+
 		virtual bool UpdateImportExport(void) = 0;
 
-		virtual bool GetPointsOfInterest(uint32_t dwPointOfInterestType, std::vector<uint32_t>& sList) = 0;
+		virtual bool GetPointsOfInterest(uint32_t dwPointOfInterestType, eastl::vector<uint32_t>& sList) = 0;
 };

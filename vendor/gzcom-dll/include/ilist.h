@@ -1,6 +1,5 @@
 #pragma once
-#include "cGZAllocatorServiceSTLAllocator.h"
-#include <list>
+#include <EASTL/list.h>
 
 template<typename T>
-using ilist = std::list<T, cGZAllocatorServiceSTLAllocator<T>>;
+using ilist = eastl::list<T>;

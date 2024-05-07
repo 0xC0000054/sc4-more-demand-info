@@ -1,7 +1,8 @@
 #pragma once
 #include "cIGZUnknown.h"
 #include <unordered_set>
-#include <vector>
+#include "EASTLConfigSC4.h"
+#include "EASTL\vector.h"
 
 class cGZPersistResourceKey;
 class cISC4LotConfiguration;
@@ -41,9 +42,9 @@ class cISC4LotConfigurationManager : public cIGZUnknown
 		virtual bool CreateGenericLotConfiguration(cISC4LotConfiguration*& pConfig, uint32_t dwConfigID) = 0;
 		virtual bool FixLotConfiguration(cISC4LotConfiguration* pConfig) = 0;
 
-		virtual bool GetMaxFootprintForBuildingFamilies(std::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
-		virtual bool GetMaxFootprintForFloraFamilies(std::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
-		virtual bool GetMaxFootprintForPropFamilies(std::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
+		virtual bool GetMaxFootprintForBuildingFamilies(eastl::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
+		virtual bool GetMaxFootprintForFloraFamilies(eastl::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
+		virtual bool GetMaxFootprintForPropFamilies(eastl::vector<uint32_t> const& sFamilies, cS3DRect2D& sRect) = 0;
 
-		virtual bool GetObjectIDArray(cSC4LotConfigurationObject* pConfigObj, std::vector<uint32_t>& sArray) = 0;
+		virtual bool GetObjectIDArray(cSC4LotConfigurationObject* pConfigObj, eastl::vector<uint32_t>& sArray) = 0;
 };

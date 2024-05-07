@@ -1,7 +1,8 @@
 #pragma once
 #include "cIGZUnknown.h"
+#include "EASTLConfigSC4.h"
+#include "EASTL\vector.h"
 #include <list>
-#include <vector>
 
 class cISC4Occupant;
 class SC4Percentage;
@@ -75,10 +76,10 @@ class cISC4ResidentialSimulator : public cIGZUnknown
 		virtual bool GetOccupantCoverage(cISC4Occupant* pOccupant, SC4Percentage const& sEffectiveness, float& fRangeX, float& fRangeZ) = 0;
 
 		virtual int32_t GetSchoolBuildingCount(void) = 0;
-		virtual bool GetSchoolBuildings(std::list<cISC4Occupant*>& sBuildings, std::vector<uint32_t>& sUnknown) = 0;
+		virtual bool GetSchoolBuildings(std::list<cISC4Occupant*>& sBuildings, eastl::vector<uint32_t>& sUnknown) = 0;
 
 		virtual int32_t GetHospitalBuildingCount(void) = 0;
-		virtual bool GetHospitalBuildings(std::list<cISC4Occupant*>& sBuildings, std::vector<uint32_t>& sUnknown) = 0;
+		virtual bool GetHospitalBuildings(std::list<cISC4Occupant*>& sBuildings, eastl::vector<uint32_t>& sUnknown) = 0;
 
 		virtual int32_t GetMaxEQ(void) = 0;
 		virtual int32_t GetMaxHQ(void) = 0;

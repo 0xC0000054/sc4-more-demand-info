@@ -34,10 +34,10 @@ public:
 	virtual uint32_t GetAvailableResourceList(cIGZPersistResourceKeyList** ppResourceList, cIGZPersistResourceKeyFilter* filter) = 0;
 	virtual uint32_t GetAvailableResourceListForType(cIGZPersistResourceKeyList** ppResourceList, uint32_t unknown1) = 0;
 
-	virtual bool RegisterObjectFactory(uint32_t unknown1, uint32_t unknown2, cIGZPersistResourceFactory* factory) = 0;
+	virtual bool RegisterObjectFactory(uint32_t clsid, uint32_t resType, cIGZPersistResourceFactory* factory) = 0;
 	virtual bool UnregisterObjectFactory(cIGZPersistResourceFactory* factory) = 0;
-	virtual bool FindObjectFactory(cIGZPersistResource* unknown1, cIGZPersistResourceFactory** unknown2) = 0;
-	virtual bool FindObjectFactory(cIGZPersistResourceFactory** unknown2) = 0;
+	virtual bool FindObjectFactory(cIGZPersistResource const& resource, cIGZPersistResourceFactory** ppFactory) = 0;
+	virtual bool FindObjectFactory(cGZPersistResourceKey const& resKey, cIGZPersistResourceFactory** ppFactory) = 0;
 	virtual bool FindObjectFactory(uint32_t unknown1, cIGZPersistResourceFactory** ppFactory) = 0;
 	virtual uint32_t GetFactoryCount() = 0;
 	virtual cIGZPersistResourceFactory* GetFactoryByIndex(uint32_t index) = 0;

@@ -3,8 +3,10 @@
 
 class cIGZString;
 
-class cIGZLanguageUtility : cIGZUnknown
+class cIGZLanguageUtility : public cIGZUnknown
 {
+public:
+
 	virtual bool Init() = 0;
 	virtual bool Shutdown() = 0;
 
@@ -22,9 +24,9 @@ class cIGZLanguageUtility : cIGZUnknown
 	virtual bool GetThousandSeparator(cIGZString& outString) = 0;
 	virtual bool GetDecimalSeparator(cIGZString& outString) = 0;
 
-	virtual bool MakeMoneyString(int64_t unknown1, cIGZString& unknown2, cIGZString const* unknown3) = 0;
-	virtual bool MakeFormattedMoneyString(double unknown1, cIGZString& unknown2, cIGZString const& unknown3, cIGZString const* unknown4) = 0;
-	virtual bool MakeNumberString(int64_t unknown1, cIGZString& unknown2) = 0;
+	virtual bool MakeMoneyString(int64_t value, cIGZString& outString, cIGZString const* currencySymbol) = 0;
+	virtual bool MakeFormattedMoneyString(double value, cIGZString& unknown2, cIGZString const& unknown3, cIGZString const* unknown4) = 0;
+	virtual bool MakeNumberString(int64_t value, cIGZString& outString) = 0;
 	virtual bool MakeFormattedNumberString(double unknown1, cIGZString& unknown2, cIGZString const& unknown3) = 0;
 
 	virtual bool ConvertToLowerCase(cIGZString const& source, cIGZString& dest) = 0;

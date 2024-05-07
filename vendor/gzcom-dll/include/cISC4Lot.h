@@ -34,10 +34,10 @@ class cISC4Lot : public cIGZUnknown
 
 		virtual bool GetBoundingRect(SC4Rect<int32_t>& sRect) = 0;
 		virtual bool GetCenter(float* fCenter) = 0;
-		
+
 		virtual float GetAltitude(void) = 0;
 		virtual bool SetAltitude(float fAltitude) = 0;
-		
+
 		virtual float GetSlope(void) = 0;
 		virtual float GetSlopeAtTimeOfConstruction(void) = 0;
 		virtual bool UpdateSlope(void) = 0;
@@ -61,7 +61,7 @@ class cISC4Lot : public cIGZUnknown
 
 		virtual uint32_t GetState(void) = 0;
 		virtual bool SetState(uint32_t dwHabitationState, uint32_t dwWealthType, int8_t cVacateReason) = 0;
-		
+
 		virtual uint32_t GetCondition(void) = 0;
 		virtual bool SetCondition(uint32_t dwBuildingCondition) = 0;
 
@@ -70,7 +70,7 @@ class cISC4Lot : public cIGZUnknown
 		virtual bool IsInDemolishableState(void) = 0;
 
 		virtual uint32_t GetDaysSinceLastStateChange(void) = 0;
-		
+
 		virtual uint32_t GetOccupantWealth(void) = 0;
 		virtual uint32_t GetLandValue(void) = 0;
 
@@ -78,29 +78,29 @@ class cISC4Lot : public cIGZUnknown
 		virtual bool SetHistorical(bool bHistorical) = 0;
 
 		virtual int8_t GetVacateReason(void) = 0;
-		
+
 		virtual uint32_t GetBuildingType(bool bUnknown) = 0;
 		virtual bool SetBuildingType(uint32_t dwBuildingType) = 0;
 
 		virtual intptr_t GetBuilding(void) = 0; // TODO: type??
 		virtual bool GetLotOccupants(std::list<cISC4Occupant*>& sOccupants) = 0;
 
-		virtual uint32_t GetCapacity(uint32_t dwWealthType) = 0;
-		virtual uint32_t GetCapacity(uint32_t dwDeveloperType, bool bForceCalculation) = 0;
+		virtual uint16_t GetCapacity(uint32_t dwWealthType) = 0;
+		virtual uint16_t GetCapacity(uint32_t dwDeveloperType, bool bForceCalculation) = 0;
 		virtual uint32_t GetAvailableCapacity(uint32_t dwDeveloperType, bool bForceCalculation) = 0;
 
-		virtual uint32_t GetPopulation(uint32_t dwDeveloperType) = 0;
+		virtual uint16_t GetPopulation(uint32_t dwDeveloperType) = 0;
 		virtual uint32_t GetPopulations(void) = 0;
 		virtual bool SetPopulation(uint32_t dwDeveloperType, uint16_t wPopulation) = 0;
 
 		virtual uint32_t GetTravelPopulation(uint32_t dwDeveloperType) = 0;
 		virtual bool ResetTravelPopulation(void) = 0;
 		virtual bool AddTravelPopulation(cISC4Lot* pLot) = 0;
-		
+
 		virtual cISC4Lot* GetTravelDesignate(void) = 0;
 		virtual bool SetTravelDesignate(cISC4Lot* pDesignate) = 0;
 
-		virtual float GetOccupancy(void) = 0;
+		virtual float GetOccupancy() = 0;
 		virtual bool GetOccupancyByType(std::map<uint32_t, SC4Percentage>& sOccupancies) = 0;
 
 		virtual float GetTravelJobs(uint32_t dwWealthType) = 0;

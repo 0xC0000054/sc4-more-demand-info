@@ -3,7 +3,6 @@
 #include "cIGZFrameWorkHooks.h"
 #include "cRZBaseString.h"
 
-// TODO: use EASTL instead
 #include <unordered_map>
 #include <vector>
 
