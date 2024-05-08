@@ -27,9 +27,11 @@
     <ClCompile Include="..\vendor\gzcom-dll\src\EASTLAllocatorSC4.cpp" />
     <ClCompile Include="MoreDemandInfoDllDirector.cpp" />
     <ClCompile Include="Logger.cpp" />
+    <ClCompile Include="RegionalCityDataProvider.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Logger.h" />
+    <ClInclude Include="RegionalCityDataProvider.h" />
     <ClInclude Include="resource.h" />
     <ClInclude Include="version.h" />
   </ItemGroup>

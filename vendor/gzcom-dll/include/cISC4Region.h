@@ -25,7 +25,7 @@ class cISC4Region : public cIGZUnknown
 		{
 		public:
 			uint32_t x;
-			uint32_t y;
+			uint32_t z;
 			eCityTileSize cityTileSize;
 		};
 
@@ -41,12 +41,12 @@ class cISC4Region : public cIGZUnknown
 		virtual bool Shutdown(void) = 0;
 		virtual bool Delete(void) = 0;
 
-		virtual cISC4RegionalCity** GetCity(uint32_t x, uint32_t y) = 0;
+		virtual cISC4RegionalCity** GetCity(uint32_t x, uint32_t z) = 0;
 		virtual cISC4RegionalCity**& InsertCity(cISC4RegionalCity* pCity) = 0;
 		virtual bool RemoveCity(cISC4RegionalCity*& pCity) = 0;
 		virtual bool DeleteCity(cISC4RegionalCity*& pCity) = 0;
 		virtual bool ReloadCity(cISC4RegionalCity*& pCity) = 0;
-		virtual bool MoveCity(cISC4Region* pRegion, cISC4RegionalCity* pCity, int32_t x, int32_t y) = 0;
+		virtual bool MoveCity(cISC4Region* pRegion, cISC4RegionalCity* pCity, int32_t x, int32_t z) = 0;
 		virtual bool GetAllCities(eastl::list<cRZAutoRefCount<cISC4RegionalCity>>& pList) = 0;
 
 		virtual int GetBaseTerrainType(void) = 0;

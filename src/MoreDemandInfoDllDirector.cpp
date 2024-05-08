@@ -11,6 +11,7 @@
 //////////////////////////////////////////////////////////////////////////
 
 #include "Logger.h"
+#include "RegionalCityDataProvider.h"
 #include "version.h"
 #include "cIGZFrameWork.h"
 #include "cIGZApp.h"
@@ -38,6 +39,8 @@
 #include "wil/filesystem.h"
 
 static constexpr uint32_t kSC4MessageActiveDemandChanged = 0x426840A0;
+static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
+static constexpr uint32_t kSC4MessagePostSave = 0x26C63345;
 static constexpr uint32_t kSC4MessagePreCityInit = 0x26D31EC0;
 static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
 
@@ -351,6 +354,46 @@ public:
 		}
 	}
 
+	void UpdateRCIGroupPopulationValues()
+	{
+		if (pAdvisorSystem)
+		{
+			// The game already includes regional totals for the residential, commercial and industrial
+			// groups, we add regional totals for the 12 RCI subgroups.
+			//
+			// The game's overall RCI population values may come from a different source than our totals for
+			// the individual groups, but that should be fine as the overall total rarely if ever equals the
+			// sum of the individual group totals.
+
+			const PopulationTotals& totals = regionalCityDataProvider.GetRegionTotalPopulation();
+
+			pAdvisorSystem->SetGlobalValue("g_region_r1_population", static_cast<double>(totals.res1Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_r2_population", static_cast<double>(totals.res2Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_r3_population", static_cast<double>(totals.res3Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_cs1_population", static_cast<double>(totals.cs1Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_cs2_population", static_cast<double>(totals.cs2Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_cs3_population", static_cast<double>(totals.cs3Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_co2_population", static_cast<double>(totals.co2Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_co3_population", static_cast<double>(totals.co3Pop));
+			pAdvisorSystem->SetGlobalValue("g_region_ir_population", static_cast<double>(totals.irPop));
+			pAdvisorSystem->SetGlobalValue("g_region_id_population", static_cast<double>(totals.idPop));
+			pAdvisorSystem->SetGlobalValue("g_region_im_population", static_cast<double>(totals.imPop));
+			pAdvisorSystem->SetGlobalValue("g_region_iht_population", static_cast<double>(totals.ihtPop));
+		}
+	}
+
+	void PostCityInit()
+	{
+		regionalCityDataProvider.PostCityInit();
+		UpdateRCIGroupPopulationValues();
+	}
+
+	void PostSave()
+	{
+		regionalCityDataProvider.PostSave();
+		UpdateRCIGroupPopulationValues();
+	}
+
 	void PreCityInit(cIGZMessage2Standard* pStandardMsg)
 	{
 		cISC4City* pCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
@@ -378,6 +421,12 @@ public:
 		case kSC4MessageActiveDemandChanged:
 			ActiveDemandChanged(pStandardMsg);
 			break;
+		case kSC4MessagePostCityInit:
+			PostCityInit();
+			break;
+		case kSC4MessagePostSave:
+			PostSave();
+			break;
 		case kSC4MessagePreCityInit:
 			PreCityInit(pStandardMsg);
 			break;
@@ -398,6 +447,8 @@ public:
 		{
 			std::vector<uint32_t> requiredNotifications;
 			requiredNotifications.push_back(kSC4MessageActiveDemandChanged);
+			requiredNotifications.push_back(kSC4MessagePostCityInit);
+			requiredNotifications.push_back(kSC4MessagePostSave);
 			requiredNotifications.push_back(kSC4MessagePreCityInit);
 			requiredNotifications.push_back(kSC4MessagePreCityShutdown);
 
@@ -448,6 +499,7 @@ private:
 
 	cISC4AdvisorSystem* pAdvisorSystem;
 	cISC4DemandSimulator* pDemandSim;
+	RegionalCityDataProvider regionalCityDataProvider;
 	bool firstCs1DemandUpdate;
 	bool firstCs2DemandUpdate;
 	bool firstCs3DemandUpdate;

@@ -18,6 +18,18 @@ With this plugin installed there will be the following new variables that can be
 | `g_id_demand` | ID demand |
 | `g_im_demand` | IM demand |
 | `g_iht_demand` | IHT demand |
+| `g_region_r1_population` | Region R§ population |
+| `g_region_r2_population` | Region R§§ population |
+| `g_region_r3_population` | Region R§§§ population |
+| `g_region_cs1_population` | Region Cs§ population |
+| `g_region_cs2_population` | Region Cs§§ population |
+| `g_region_cs3_population` | Region Cs§§§ population |
+| `g_region_co2_population` | Region Co§§ population |
+| `g_region_co3_population` | Region Co§§§ population |
+| `g_region_ir_population` | Region IR (I-Ag) population |
+| `g_region_id_population` | Region ID population |
+| `g_region_im_population` | Region IM population |
+| `g_region_iht_population` | Region IHT population |
 
 The values can be accessed using `game.<value name>` in LUA scripts and UI placeholder text.
 
