@@ -30,10 +30,10 @@
 #include "cRZMessage2Standard.h"
 #include "cRZBaseString.h"
 #include "GZServPtrs.h"
+#include <array>
 #include <filesystem>
 #include <memory>
 #include <string>
-#include <vector>
 #include <Windows.h>
 #include "wil/resource.h"
 #include "wil/filesystem.h"
@@ -42,6 +42,14 @@ static constexpr uint32_t kSC4MessageActiveDemandChanged = 0x426840A0;
 static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
 static constexpr uint32_t kSC4MessagePostSave = 0x26C63345;
 static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
+
+static constexpr std::array<uint32_t, 4> RequiredNotifications =
+{
+	kSC4MessageActiveDemandChanged,
+	kSC4MessagePostCityInit,
+	kSC4MessagePreCityShutdown,
+	kSC4MessagePostSave
+};
 
 static constexpr uint32_t kCs1DemandID = 0x3110;
 static constexpr uint32_t kCs2DemandID = 0x3120;
@@ -450,13 +458,7 @@ public:
 		cIGZMessageServer2Ptr pMsgServ;
 		if (pMsgServ)
 		{
-			std::vector<uint32_t> requiredNotifications;
-			requiredNotifications.push_back(kSC4MessageActiveDemandChanged);
-			requiredNotifications.push_back(kSC4MessagePostCityInit);
-			requiredNotifications.push_back(kSC4MessagePostSave);
-			requiredNotifications.push_back(kSC4MessagePreCityShutdown);
-
-			for (uint32_t messageID : requiredNotifications)
+			for (uint32_t messageID : RequiredNotifications)
 			{
 				if (!pMsgServ->AddNotification(this, messageID))
 				{
