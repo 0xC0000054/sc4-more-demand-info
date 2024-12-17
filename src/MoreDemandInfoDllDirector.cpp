@@ -41,7 +41,6 @@
 static constexpr uint32_t kSC4MessageActiveDemandChanged = 0x426840A0;
 static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
 static constexpr uint32_t kSC4MessagePostSave = 0x26C63345;
-static constexpr uint32_t kSC4MessagePreCityInit = 0x26D31EC0;
 static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
 
 static constexpr uint32_t kCs1DemandID = 0x3110;
@@ -354,6 +353,17 @@ public:
 		}
 	}
 
+	void UpdateDemandValues()
+	{
+		UpdateCs1Demand();
+		UpdateCs2Demand();
+		UpdateCs3Demand();
+		UpdateIRDemand();
+		UpdateIDDemand();
+		UpdateIMDemand();
+		UpdateIHTDemand();
+	}
+
 	void UpdateRCIGroupPopulationValues()
 	{
 		if (pAdvisorSystem)
@@ -382,19 +392,7 @@ public:
 		}
 	}
 
-	void PostCityInit()
-	{
-		regionalCityDataProvider.PostCityInit();
-		UpdateRCIGroupPopulationValues();
-	}
-
-	void PostSave()
-	{
-		regionalCityDataProvider.PostSave();
-		UpdateRCIGroupPopulationValues();
-	}
-
-	void PreCityInit(cIGZMessage2Standard* pStandardMsg)
+	void PostCityInit(cIGZMessage2Standard* pStandardMsg)
 	{
 		cISC4City* pCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
 
@@ -402,7 +400,17 @@ public:
 		{
 			pAdvisorSystem = pCity->GetAdvisorSystem();
 			pDemandSim = pCity->GetDemandSimulator();
+
+			regionalCityDataProvider.PostCityInit();
+			UpdateDemandValues();
+			UpdateRCIGroupPopulationValues();
 		}
+	}
+
+	void PostSave()
+	{
+		regionalCityDataProvider.PostSave();
+		UpdateRCIGroupPopulationValues();
 	}
 
 	void PreCityShutdown()
@@ -422,13 +430,10 @@ public:
 			ActiveDemandChanged(pStandardMsg);
 			break;
 		case kSC4MessagePostCityInit:
-			PostCityInit();
+			PostCityInit(pStandardMsg);
 			break;
 		case kSC4MessagePostSave:
 			PostSave();
-			break;
-		case kSC4MessagePreCityInit:
-			PreCityInit(pStandardMsg);
 			break;
 		case kSC4MessagePreCityShutdown:
 			PreCityShutdown();
@@ -449,7 +454,6 @@ public:
 			requiredNotifications.push_back(kSC4MessageActiveDemandChanged);
 			requiredNotifications.push_back(kSC4MessagePostCityInit);
 			requiredNotifications.push_back(kSC4MessagePostSave);
-			requiredNotifications.push_back(kSC4MessagePreCityInit);
 			requiredNotifications.push_back(kSC4MessagePreCityShutdown);
 
 			for (uint32_t messageID : requiredNotifications)
