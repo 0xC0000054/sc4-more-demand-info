@@ -17,6 +17,7 @@
 #include "cIGZApp.h"
 #include "cISC4App.h"
 #include "cISC4AdvisorSystem.h"
+#include "cISC4BudgetSimulator.h"
 #include "cISC4City.h"
 #include "cISC4Demand.h"
 #include "cISC4DemandSimulator.h"
@@ -42,13 +43,15 @@ static constexpr uint32_t kSC4MessageActiveDemandChanged = 0x426840A0;
 static constexpr uint32_t kSC4MessagePostCityInit = 0x26D31EC1;
 static constexpr uint32_t kSC4MessagePostSave = 0x26C63345;
 static constexpr uint32_t kSC4MessagePreCityShutdown = 0x26D31EC2;
+static constexpr uint32_t kSC4MessageSimNewMonth = 0x66956816;
 
-static constexpr std::array<uint32_t, 4> RequiredNotifications =
+static constexpr std::array<uint32_t, 5> RequiredNotifications =
 {
 	kSC4MessageActiveDemandChanged,
 	kSC4MessagePostCityInit,
 	kSC4MessagePreCityShutdown,
-	kSC4MessagePostSave
+	kSC4MessagePostSave,
+	kSC4MessageSimNewMonth,
 };
 
 static constexpr uint32_t kCs1DemandID = 0x3110;
@@ -58,6 +61,24 @@ static constexpr uint32_t kIRDemandID = 0x4100;
 static constexpr uint32_t kIDDemandID = 0x4200;
 static constexpr uint32_t kIMDemandID = 0x4300;
 static constexpr uint32_t kIHTDemandID = 0x4400;
+
+static constexpr std::array<std::pair<int32_t, const char*>, 12> RCIGroupTaxIncomeVariables =
+{
+	// The first value is the index that is used to retrieve the data from the budget simulator.
+	// The second value is the variable name that SC4 will add to the Lua game table.
+	std::pair(0, "g_tax_income_r_low"),
+	std::pair(1, "g_tax_income_r_med"),
+	std::pair(2, "g_tax_income_r_high"),
+	std::pair(3, "g_tax_income_cs_low"),
+	std::pair(4, "g_tax_income_cs_med"),
+	std::pair(5, "g_tax_income_cs_high"),
+	std::pair(6, "g_tax_income_co_med"),
+	std::pair(7, "g_tax_income_co_high"),
+	std::pair(8, "g_tax_income_i_resource"),
+	std::pair(9, "g_tax_income_i_dirty"),
+	std::pair(10, "g_tax_income_i_manufacturing"),
+	std::pair(11, "g_tax_income_i_hightech"),
+};
 
 static constexpr uint32_t kTotalsDemandIndex = 0x20000;
 
@@ -400,6 +421,19 @@ public:
 		}
 	}
 
+	void UpdateRCIGroupTaxIncome()
+	{
+		if (pAdvisorSystem && pBudgetSim)
+		{
+			for (const auto& item : RCIGroupTaxIncomeVariables)
+			{
+				const int64_t taxIncome = pBudgetSim->GetTaxIncome(item.first);
+
+				pAdvisorSystem->SetGlobalValue(item.second, static_cast<double>(taxIncome));
+			}
+		}
+	}
+
 	void PostCityInit(cIGZMessage2Standard* pStandardMsg)
 	{
 		cISC4City* pCity = static_cast<cISC4City*>(pStandardMsg->GetVoid1());
@@ -407,11 +441,13 @@ public:
 		if (pCity)
 		{
 			pAdvisorSystem = pCity->GetAdvisorSystem();
+			pBudgetSim = pCity->GetBudgetSimulator();
 			pDemandSim = pCity->GetDemandSimulator();
 
 			regionalCityDataProvider.PostCityInit();
 			UpdateDemandValues();
 			UpdateRCIGroupPopulationValues();
+			UpdateRCIGroupTaxIncome();
 		}
 	}
 
@@ -424,7 +460,13 @@ public:
 	void PreCityShutdown()
 	{
 		pAdvisorSystem = nullptr;
+		pBudgetSim = nullptr;
 		pDemandSim = nullptr;
+	}
+
+	void SimNewMonth()
+	{
+		UpdateRCIGroupTaxIncome();
 	}
 
 	bool DoMessage(cIGZMessage2* pMessage)
@@ -445,6 +487,9 @@ public:
 			break;
 		case kSC4MessagePreCityShutdown:
 			PreCityShutdown();
+			break;
+		case kSC4MessageSimNewMonth:
+			SimNewMonth();
 			break;
 		}
 
@@ -504,6 +549,7 @@ private:
 	}
 
 	cISC4AdvisorSystem* pAdvisorSystem;
+	cISC4BudgetSimulator* pBudgetSim;
 	cISC4DemandSimulator* pDemandSim;
 	RegionalCityDataProvider regionalCityDataProvider;
 	bool firstCs1DemandUpdate;

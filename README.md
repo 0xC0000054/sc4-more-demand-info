@@ -30,6 +30,18 @@ With this plugin installed there will be the following new variables that can be
 | `g_region_id_population` | Region ID population |
 | `g_region_im_population` | Region IM population |
 | `g_region_iht_population` | Region IHT population |
+| `g_tax_income_r_low` | Estimated monthly R§ tax income | 
+| `g_tax_income_r_med` | Estimated monthly R§§ tax income | 
+| `g_tax_income_r_high` | Estimated monthly R§§§ tax income | 
+| `g_tax_income_cs_low` | Estimated monthly Cs§ tax income | 
+| `g_tax_income_cs_med` | Estimated monthly Cs§§ tax income | 
+| `g_tax_income_cs_high` | Estimated monthly Cs§§§ tax income | 
+| `g_tax_income_co_med` | Estimated monthly Co§§ tax income | 
+| `g_tax_income_co_high` | Estimated monthly Co§§§ tax income | 
+| `g_tax_income_i_resource` | Estimated monthly industrial resource (IR, I-Ag) tax income | 
+| `g_tax_income_i_dirty` | Estimated monthly industrial dirty tax income | 
+| `g_tax_income_i_manufacturing` | Estimated monthly industrial manufacturing tax income | 
+| `g_tax_income_i_hightech` | Estimated monthly industrial high tech tax income | 
 
 The values can be accessed using `game.<value name>` in LUA scripts and UI placeholder text.
 
