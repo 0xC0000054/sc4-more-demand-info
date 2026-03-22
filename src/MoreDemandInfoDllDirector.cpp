@@ -164,7 +164,7 @@ public:
 	{
 		if (pAdvisorSystem && pDemandSim)
 		{
-			const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs1DemandID, kTotalsDemandIndex);
+			const cISC4Demand* pDemand = pDemandSim->GetDemand(kCs2DemandID, kTotalsDemandIndex);
 
 			if (pDemand)
 			{
