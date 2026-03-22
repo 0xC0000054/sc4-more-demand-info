@@ -60,7 +60,6 @@
   <ItemGroup>
     <None Include=".editorconfig" />
     <None Include="IgnoredWords.dic" />
-    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="version.rc">
