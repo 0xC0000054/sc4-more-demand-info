@@ -11,20 +11,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\vendor\EASTL\source\assert.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\atomic.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\fixed_pool.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\hashtable.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\intrusive_list.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\numeric_limits.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\red_black_tree.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\string.cpp" />
-    <ClCompile Include="..\vendor\EASTL\source\thread_support.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZBaseString.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZCOMDllDirector.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZMessage2.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\cRZMessage2Standard.cpp" />
-    <ClCompile Include="..\vendor\gzcom-dll\src\EASTLAllocatorSC4.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZBaseString.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZCOMDllDirector.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2.cpp" />
+    <ClCompile Include="..\vendor\gzcom-dll\gzcom-dll\src\cRZMessage2Standard.cpp" />
     <ClCompile Include="MoreDemandInfoDllDirector.cpp" />
     <ClCompile Include="Logger.cpp" />
     <ClCompile Include="RegionalCityDataProvider.cpp" />
@@ -90,7 +80,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\include;..\vendor\EABase\include\Common;..\vendor\EASTL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\EABase\include\Common;..\vendor\EASTL\include</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -113,7 +103,7 @@
       <PrecompiledHeaderFile>
       </PrecompiledHeaderFile>
       <LanguageStandard>stdcpp20</LanguageStandard>
-      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\include;..\vendor\EABase\include\Common;..\vendor\EASTL\include</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>..\vendor\gzcom-dll\gzcom-dll\include;..\vendor\EABase\include\Common;..\vendor\EASTL\include</AdditionalIncludeDirectories>
       <DebugInformationFormat>ProgramDatabase</DebugInformationFormat>
     </ClCompile>
     <Link>

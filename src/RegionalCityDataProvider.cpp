@@ -25,6 +25,7 @@
 #include "cISC4Region.h"
 #include "cISC4RegionalCity.h"
 #include "GZServPtrs.h"
+#include "SC4Vector.h"
 
 RegionalCityDataProvider::RegionalCityDataProvider()
 	: regionPopulationTotals{},
@@ -109,7 +110,7 @@ void RegionalCityDataProvider::UpdateRegionalCityPopulationTotals()
 
 			pRegionalCity->GetPosition(currentCityX, currentCityZ);
 
-			eastl::vector<cISC4Region::cLocation> cityLocations;
+			SC4Vector<cISC4Region::cLocation> cityLocations;
 
 			pRegion->GetCityLocations(cityLocations);
 
