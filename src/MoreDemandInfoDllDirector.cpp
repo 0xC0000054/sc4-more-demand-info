@@ -91,8 +91,6 @@ static constexpr std::array<std::pair<int32_t, const char*>, 12> RCIGroupTaxInco
 
 static constexpr uint32_t kTotalsDemandIndex = 0x20000;
 
-static constexpr uint32_t kGZIID_cISC4App = 0x26ce01c0;
-
 static constexpr uint32_t kMoreDemandInfoPluginDirectorID = 0x9E06B67E;
 
 static constexpr std::string_view PluginLogFileName = "SC4MoreDemandInfo.log";
